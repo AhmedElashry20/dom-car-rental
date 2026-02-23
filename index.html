@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دوم لتأجير السيارات | Dom Car Rental</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Barlow:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --y:#F5B800;
+  --yd:#D49E00;
+  --yl:#FFD140;
+  --b:#111111;
+  --d:#1A1A1A;
+  --d2:#222222;
+  --d3:#2E2E2E;
+  --w:#FFFFFF;
+  --wg:#F7F7F7;
+  --g:#888888;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--w);color:var(--b);font-family:'Tajawal',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:#eee;}
+::-webkit-scrollbar-thumb{background:var(--y);border-radius:2px;}
+
+/* ── LANG ── */
+.en{display:none!important;}
+html[lang="en"] .ar{display:none!important;}
+html[lang="en"] .en{display:revert!important;}
+html[lang="en"] body{font-family:'Barlow',sans-serif;}
+
+/* ── NAV ── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 60px;
+  transition:all .35s;
+}
+#nav.up{
+  background:var(--b);
+  padding:12px 60px;
+  box-shadow:0 4px 30px rgba(0,0,0,.3);
+}
+.nav-logo{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;}
+.nav-logo-icon{
+  width:44px;height:44px;background:var(--y);
+  display:flex;align-items:center;justify-content:center;
+  border-radius:8px;font-size:22px;font-weight:900;color:var(--b);
+  font-family:'Barlow',sans-serif;line-height:1;
+}
+.nav-logo-text{font-size:17px;font-weight:700;color:var(--w);line-height:1.2;}
+.nav-logo-sub{font-size:10px;color:rgba(255,255,255,.45);letter-spacing:1px;font-weight:400;}
+.nav-links{display:flex;gap:30px;list-style:none;}
+.nav-links a{
+  color:rgba(255,255,255,.65);font-size:13px;letter-spacing:.5px;
+  cursor:pointer;text-decoration:none;font-weight:500;transition:color .25s;
+}
+.nav-links a:hover{color:var(--y);}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.lbtn{
+  background:transparent;border:1px solid rgba(245,184,0,.4);
+  color:var(--y);padding:5px 14px;font-size:11px;letter-spacing:2px;
+  cursor:pointer;font-family:'Tajawal',sans-serif;transition:all .25s;
+  text-transform:uppercase;border-radius:4px;
+}
+.lbtn.on,.lbtn:hover{background:var(--y);color:var(--b);border-color:var(--y);}
+.book-btn{
+  background:var(--y);color:var(--b);border:none;
+  padding:10px 28px;font-family:'Tajawal',sans-serif;font-size:13px;
+  font-weight:700;letter-spacing:1px;cursor:pointer;
+  border-radius:6px;transition:all .25s;
+}
+.book-btn:hover{background:var(--yl);transform:translateY(-1px);box-shadow:0 8px 24px rgba(245,184,0,.35);}
+
+/* ── HAMBURGER MENU ── */
+.hamburger{
+  display:none;background:none;border:none;cursor:pointer;
+  flex-direction:column;gap:5px;padding:6px;
+}
+.hamburger span{
+  display:block;width:24px;height:2px;background:var(--w);
+  transition:all .3s;border-radius:2px;
+}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* Mobile nav overlay */
+.mobile-nav{
+  display:none;position:fixed;inset:0;z-index:998;
+  background:rgba(17,17,17,.97);
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:28px;
+}
+.mobile-nav.open{display:flex;}
+.mobile-nav a{
+  color:var(--w);font-size:20px;font-weight:600;
+  text-decoration:none;transition:color .25s;
+}
+.mobile-nav a:hover{color:var(--y);}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;
+  background:var(--b);overflow:hidden;
+}
+.hero-bg{position:absolute;inset:0;}
+.hero-bg video{width:100%;height:100%;object-fit:cover;opacity:.25;filter:contrast(1.1) saturate(1.2);}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg, rgba(17,17,17,.97) 45%, rgba(17,17,17,.5) 100%);
+}
+.hero-stripe{
+  position:absolute;top:0;bottom:0;
+  right:38%;width:6px;
+  background:linear-gradient(to bottom, transparent, var(--y) 20%, var(--y) 80%, transparent);
+  opacity:.4;
+}
+.hero-dots{
+  position:absolute;bottom:0;left:0;right:0;height:300px;
+  background-image:radial-gradient(rgba(245,184,0,.15) 1px, transparent 1px);
+  background-size:28px 28px;
+  mask-image:linear-gradient(to top, rgba(0,0,0,.5), transparent);
+}
+.hero-inner{
+  position:relative;z-index:2;
+  max-width:1300px;margin:0 auto;
+  padding:120px 60px 80px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;width:100%;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(245,184,0,.12);border:1px solid rgba(245,184,0,.3);
+  padding:6px 16px;border-radius:30px;
+  font-size:11px;letter-spacing:3px;color:var(--y);
+  text-transform:uppercase;margin-bottom:24px;
+}
+.hero-tag span{width:6px;height:6px;background:var(--y);border-radius:50%;animation:pulse 1.5s infinite;}
+.hero-tag span.ar,.hero-tag span.en{width:auto;height:auto;background:none;border-radius:0;animation:none;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero-h1{
+  font-size:clamp(44px,6vw,82px);font-weight:900;
+  line-height:1.05;color:var(--w);margin-bottom:20px;
+}
+.hero-h1 .y{color:var(--y);}
+.hero-p{
+  font-size:16px;line-height:1.85;
+  color:rgba(255,255,255,.55);margin-bottom:44px;max-width:500px;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-y{
+  background:var(--y);color:var(--b);border:none;
+  padding:15px 36px;font-family:'Tajawal',sans-serif;font-size:14px;
+  font-weight:700;letter-spacing:1px;cursor:pointer;
+  border-radius:8px;transition:all .25s;
+}
+.btn-y:hover{background:var(--yl);transform:translateY(-2px);box-shadow:0 12px 36px rgba(245,184,0,.35);}
+.btn-o{
+  background:transparent;color:var(--w);
+  border:1.5px solid rgba(255,255,255,.3);
+  padding:15px 36px;font-family:'Tajawal',sans-serif;font-size:14px;
+  font-weight:600;cursor:pointer;border-radius:8px;transition:all .25s;
+}
+.btn-o:hover{border-color:var(--y);color:var(--y);}
+.hero-stats{
+  display:flex;gap:32px;margin-top:56px;
+  padding-top:32px;border-top:1px solid rgba(255,255,255,.1);
+  flex-wrap:wrap;
+}
+.stat{text-align:center;}
+.stat-n{font-family:'Barlow',sans-serif;font-size:34px;font-weight:900;color:var(--y);line-height:1;}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;letter-spacing:.5px;}
+
+/* Hero visual card */
+.hero-visual{position:relative;}
+.hv-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;overflow:hidden;position:relative;
+}
+.hv-img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:brightness(.7);display:block;}
+.hv-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(17,17,17,.85) 0%, transparent 55%);
+}
+.hv-bottom{position:absolute;bottom:0;left:0;right:0;padding:28px;}
+.hv-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--y);color:var(--b);padding:8px 18px;
+  border-radius:6px;font-size:13px;font-weight:700;margin-bottom:12px;
+}
+.hv-desc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;}
+.hv-float{
+  position:absolute;top:20px;right:20px;
+  background:var(--b);color:var(--y);
+  padding:8px 16px;border-radius:8px;
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  border:1px solid rgba(245,184,0,.3);
+}
+.scroll-hint{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  animation:bounce 2s infinite;
+}
+.scroll-hint span{font-size:9px;letter-spacing:3px;color:rgba(245,184,0,.5);text-transform:uppercase;}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--y),transparent);}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ── SECTION COMMONS ── */
+.sec{padding:100px 0;}
+.sec-wrap{max-width:1300px;margin:0 auto;padding:0 60px;}
+.sec-head{text-align:center;margin-bottom:64px;}
+.sec-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(245,184,0,.1);padding:5px 16px;border-radius:20px;
+  font-size:10px;letter-spacing:3px;color:var(--y);text-transform:uppercase;
+  font-weight:700;margin-bottom:14px;border:1px solid rgba(245,184,0,.2);
+}
+.sec-title{
+  font-size:clamp(28px,3.5vw,46px);font-weight:900;
+  color:var(--b);line-height:1.1;margin-bottom:12px;
+}
+.sec-title .y{color:var(--y);}
+.sec-sub{font-size:16px;color:var(--g);line-height:1.7;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,#ddd,transparent);}
+
+/* ── ABOUT ── */
+.about{padding:100px 0;background:var(--b);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-img-wrap{position:relative;}
+.about-img-main{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;display:block;filter:brightness(.8);}
+.about-img-accent{
+  position:absolute;bottom:-24px;left:-24px;
+  width:48%;border-radius:12px;overflow:hidden;
+  border:4px solid var(--b);box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.about-img-accent img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:brightness(.75);display:block;}
+.about-accent-lbl{
+  position:absolute;bottom:0;left:0;right:0;
+  background:var(--y);padding:8px 14px;
+  font-size:10px;font-weight:700;letter-spacing:2px;color:var(--b);
+  text-transform:uppercase;
+}
+.about-yellow-line{
+  position:absolute;top:0;right:-16px;
+  width:5px;height:80%;border-radius:4px;
+  background:linear-gradient(to bottom, var(--y), transparent);
+}
+.about-text-sec h2{font-size:clamp(28px,3.5vw,44px);font-weight:900;color:var(--w);margin-bottom:18px;line-height:1.1;}
+.about-text-sec h2 span{color:var(--y);}
+.about-intro{font-size:18px;color:var(--y);font-weight:600;margin-bottom:16px;line-height:1.5;}
+.about-body{font-size:15px;line-height:1.9;color:rgba(255,255,255,.55);margin-bottom:36px;}
+.vm-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:36px;}
+.vm-box{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:20px;transition:all .3s;
+}
+.vm-box:hover{border-color:rgba(245,184,0,.3);background:rgba(245,184,0,.04);}
+.vm-ico{font-size:24px;margin-bottom:10px;}
+.vm-t{font-size:10px;letter-spacing:2px;color:var(--y);text-transform:uppercase;margin-bottom:6px;font-weight:700;}
+.vm-d{font-size:13px;line-height:1.65;color:rgba(255,255,255,.5);}
+
+/* ── FLEET ── */
+.fleet{padding:100px 0;background:var(--wg);}
+.fleet-cats{
+  display:flex;gap:10px;justify-content:center;
+  flex-wrap:wrap;margin-bottom:52px;
+}
+.cat-btn{
+  background:transparent;border:1.5px solid #ddd;
+  color:var(--g);padding:9px 22px;border-radius:30px;
+  font-family:'Tajawal',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .25s;
+}
+.cat-btn.on,.cat-btn:hover{
+  background:var(--y);border-color:var(--y);color:var(--b);
+}
+.fleet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.car-card{
+  background:var(--w);border-radius:16px;overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,.07);transition:all .3s;cursor:default;
+}
+.car-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.14);}
+.car-card.hide{display:none;}
+.car-img-wrap{position:relative;overflow:hidden;}
+.car-img{width:100%;aspect-ratio:16/10;object-fit:cover;transition:transform 5s ease;display:block;}
+.car-card:hover .car-img{transform:scale(1.06);}
+.car-cat-badge{
+  position:absolute;top:14px;right:14px;
+  background:var(--y);color:var(--b);
+  padding:4px 12px;border-radius:20px;
+  font-size:10px;font-weight:700;letter-spacing:1px;
+}
+.car-body{padding:22px 24px;}
+.car-name{font-size:19px;font-weight:800;margin-bottom:4px;}
+.car-model{font-size:12px;color:var(--g);margin-bottom:16px;}
+.car-features{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.car-feat{
+  background:var(--wg);padding:5px 12px;border-radius:20px;
+  font-size:11px;color:#555;display:flex;align-items:center;gap:5px;
+}
+.car-book{
+  width:100%;background:var(--b);color:var(--w);border:none;
+  padding:12px;border-radius:8px;font-family:'Tajawal',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;transition:all .25s;
+  letter-spacing:.5px;
+}
+.car-book:hover{background:var(--y);color:var(--b);}
+
+/* ── SERVICES ── */
+.services{padding:100px 0;background:var(--b);}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);}
+.svc-card{
+  background:var(--d);padding:44px 36px;transition:all .3s;cursor:default;
+  position:relative;overflow:hidden;
+}
+.svc-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--y);transform:scaleX(0);transition:transform .35s;
+  transform-origin:right;
+}
+.svc-card:hover::before{transform:scaleX(1);transform-origin:left;}
+.svc-card:hover{background:var(--d2);}
+.svc-num{
+  font-family:'Barlow',sans-serif;font-size:56px;font-weight:900;
+  color:rgba(245,184,0,.08);line-height:1;margin-bottom:18px;
+}
+.svc-ico{font-size:32px;margin-bottom:16px;display:block;}
+.svc-name{font-size:18px;font-weight:700;color:var(--w);margin-bottom:10px;}
+.svc-desc{font-size:13px;line-height:1.75;color:rgba(255,255,255,.45);}
+.svc-tag{
+  display:inline-block;margin-top:18px;font-size:10px;letter-spacing:2px;
+  color:var(--y);border:1px solid rgba(245,184,0,.3);
+  padding:3px 10px;border-radius:3px;text-transform:uppercase;
+}
+
+/* ── WHY DOM ── */
+.why{padding:100px 0;background:var(--wg);}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.why-items{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.why-item{
+  background:var(--w);border-radius:14px;padding:24px 20px;
+  border:1.5px solid transparent;transition:all .3s;cursor:default;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+.why-item:hover{border-color:var(--y);box-shadow:0 8px 32px rgba(245,184,0,.12);}
+.why-check{
+  width:36px;height:36px;background:rgba(245,184,0,.12);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;margin-bottom:12px;transition:background .3s;
+}
+.why-item:hover .why-check{background:var(--y);}
+.why-n{font-size:14px;font-weight:700;color:var(--b);margin-bottom:4px;}
+.why-d{font-size:12px;color:var(--g);line-height:1.6;}
+.why-visual{position:relative;}
+.why-img-big{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:20px;display:block;filter:brightness(.75);}
+.why-img-overlay{
+  position:absolute;inset:0;border-radius:20px;
+  background:linear-gradient(to top, rgba(17,17,17,.7) 0%, transparent 50%);
+}
+.why-cta-card{
+  position:absolute;bottom:28px;left:28px;right:28px;
+  background:var(--y);border-radius:14px;padding:22px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;
+}
+.why-cta-text{font-size:15px;font-weight:700;color:var(--b);line-height:1.3;}
+.why-cta-num{
+  font-family:'Barlow',sans-serif;
+  font-size:38px;font-weight:900;color:var(--b);
+  white-space:nowrap;line-height:1;
+}
+
+/* ── OBJECTIVES ── */
+.objectives{padding:100px 0;background:var(--b);}
+.obj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.obj-card{
+  border:1px solid rgba(255,255,255,.08);border-radius:14px;
+  padding:28px 22px;transition:all .3s;cursor:default;
+  background:rgba(255,255,255,.02);
+}
+.obj-card:hover{border-color:var(--y);background:rgba(245,184,0,.04);transform:translateY(-4px);}
+.obj-num{
+  font-family:'Barlow',sans-serif;font-size:40px;font-weight:900;
+  color:rgba(245,184,0,.25);line-height:1;margin-bottom:14px;
+}
+.obj-ico{font-size:26px;margin-bottom:12px;}
+.obj-text{font-size:13px;color:rgba(255,255,255,.5);line-height:1.75;}
+
+/* ── VALUES ── */
+.values{padding:80px 0;background:var(--y);}
+.values-row{display:flex;justify-content:center;gap:0;flex-wrap:wrap;}
+.val-item{
+  text-align:center;padding:32px 40px;
+  border-left:1px solid rgba(0,0,0,.1);
+  transition:background .25s;cursor:default;
+}
+.val-item:first-child{border-left:none;}
+.val-item:hover{background:rgba(0,0,0,.08);}
+.val-ico{font-size:32px;margin-bottom:10px;}
+.val-name{font-size:18px;font-weight:800;color:var(--b);}
+
+/* ── TRUST / LEGAL ── */
+.trust{padding:80px 0;background:var(--wg);}
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+.trust-title{font-size:clamp(24px,3vw,36px);font-weight:900;color:var(--b);margin-bottom:8px;}
+.trust-sub{font-size:14px;color:var(--g);margin-bottom:36px;}
+.reg-box{
+  background:var(--w);border-radius:16px;padding:32px;
+  border:1.5px solid #eee;margin-bottom:20px;
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;
+}
+.reg-item{text-align:center;}
+.reg-label{font-size:9px;letter-spacing:2px;color:var(--g);text-transform:uppercase;margin-bottom:6px;}
+.reg-val{font-size:15px;font-weight:700;color:var(--b);}
+.reg-val.green{color:#22A55A;}
+.iso-list{display:flex;flex-direction:column;gap:14px;}
+.iso-row{
+  background:var(--w);border-radius:12px;padding:20px 24px;
+  display:flex;align-items:center;gap:16px;border:1.5px solid #eee;
+  transition:border-color .25s;
+}
+.iso-row:hover{border-color:var(--y);}
+.iso-badge-y{
+  background:var(--y);color:var(--b);padding:6px 14px;
+  border-radius:8px;font-family:'Barlow',sans-serif;
+  font-size:13px;font-weight:800;white-space:nowrap;
+}
+.iso-info{flex:1;}
+.iso-name{font-size:14px;font-weight:700;color:var(--b);}
+.iso-desc-t{font-size:12px;color:var(--g);margin-top:2px;}
+.iso-check{font-size:20px;color:#22A55A;}
+
+/* ── CONTACT ── */
+.contact{padding:100px 0;background:var(--b);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.contact-title{font-size:clamp(28px,3.5vw,44px);font-weight:900;color:var(--w);margin-bottom:8px;}
+.contact-title span{color:var(--y);}
+.contact-sub{font-size:15px;color:rgba(255,255,255,.4);margin-bottom:40px;line-height:1.7;}
+.contact-items{display:flex;flex-direction:column;gap:16px;margin-bottom:36px;}
+.ci{
+  display:flex;align-items:center;gap:18px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:18px 22px;transition:all .25s;
+}
+.ci:hover{border-color:rgba(245,184,0,.3);background:rgba(245,184,0,.04);}
+.ci-ico{
+  width:44px;height:44px;background:rgba(245,184,0,.15);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+}
+.ci-lbl{font-size:9px;letter-spacing:2px;color:var(--y);text-transform:uppercase;margin-bottom:3px;}
+.ci-val{font-size:15px;font-weight:600;color:var(--w);direction:ltr;text-align:right;}
+html[lang="en"] .ci-val{text-align:left;}
+.social-row{display:flex;gap:10px;flex-wrap:wrap;}
+.sp{
+  background:rgba(255,255,255,.06);color:rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.1);padding:8px 16px;border-radius:8px;
+  font-size:12px;cursor:pointer;transition:all .25s;text-decoration:none;
+}
+.sp:hover{background:var(--y);color:var(--b);border-color:var(--y);}
+.contact-form{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;padding:44px;
+}
+.cf-title{font-size:20px;font-weight:700;color:var(--w);margin-bottom:28px;}
+.fg{margin-bottom:18px;}
+.fl{display:block;font-size:10px;letter-spacing:2px;color:var(--y);text-transform:uppercase;margin-bottom:7px;font-weight:600;}
+.fi{
+  width:100%;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);color:var(--w);
+  padding:12px 16px;font-family:'Tajawal',sans-serif;font-size:14px;
+  outline:none;transition:border-color .25s;border-radius:8px;
+}
+.fi:focus{border-color:var(--y);background:rgba(245,184,0,.04);}
+.fi::placeholder{color:rgba(255,255,255,.2);}
+.fg.half{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.send{
+  width:100%;background:var(--y);color:var(--b);border:none;
+  padding:15px;font-family:'Tajawal',sans-serif;font-size:15px;
+  font-weight:700;letter-spacing:1px;cursor:pointer;border-radius:10px;
+  transition:all .25s;margin-top:6px;
+}
+.send:hover{background:var(--yl);transform:translateY(-2px);box-shadow:0 12px 36px rgba(245,184,0,.3);}
+
+/* ── FOOTER ── */
+footer{background:#0A0A0A;border-top:1px solid rgba(255,255,255,.07);padding:64px 0 28px;}
+.footer-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:52px;padding-bottom:48px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  flex-wrap:wrap;gap:40px;
+}
+.footer-logo-area .fl-logo{
+  display:flex;align-items:center;gap:12px;margin-bottom:10px;
+}
+.fl-ico{
+  width:48px;height:48px;background:var(--y);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:900;color:var(--b);font-family:'Barlow',sans-serif;
+}
+.fl-name{font-size:20px;font-weight:800;color:var(--w);}
+.fl-sub{font-size:12px;color:rgba(255,255,255,.3);margin-top:2px;}
+.fl-tagline{font-size:13px;color:rgba(255,255,255,.3);margin-top:6px;max-width:240px;line-height:1.6;}
+.footer-cols{display:flex;gap:64px;flex-wrap:wrap;}
+.fc-title{font-size:10px;letter-spacing:3px;color:var(--y);text-transform:uppercase;font-weight:700;margin-bottom:18px;}
+.fc-links{display:flex;flex-direction:column;gap:10px;}
+.fc-links a{color:rgba(255,255,255,.4);font-size:13px;text-decoration:none;cursor:pointer;transition:color .25s;}
+.fc-links a:hover{color:var(--y);}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:10px;
+}
+.fc{font-size:12px;color:rgba(255,255,255,.2);}
+.fc span{color:rgba(245,184,0,.6);}
+
+/* ── BACK TO TOP ── */
+.btt{
+  position:fixed;bottom:28px;left:28px;z-index:900;
+  width:48px;height:48px;border-radius:50%;
+  background:var(--y);color:var(--b);border:none;
+  font-size:20px;cursor:pointer;
+  display:none;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(245,184,0,.3);
+  transition:all .25s;
+}
+.btt.show{display:flex;}
+.btt:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(245,184,0,.45);}
+
+/* ── FADE IN ── */
+.fade{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease;}
+.fade.in{opacity:1;transform:none;}
+.fade.d1{transition-delay:.1s;}
+.fade.d2{transition-delay:.2s;}
+.fade.d3{transition-delay:.3s;}
+
+/* ── MOBILE ── */
+@media(max-width:960px){
+  #nav{padding:14px 24px;}
+  #nav.up{padding:10px 24px;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .sec-wrap{padding:0 24px;}
+  .hero-inner,.about-grid,.why-grid,.contact-grid,.trust-grid{grid-template-columns:1fr;gap:40px;}
+  .fleet-grid{grid-template-columns:1fr 1fr;}
+  .svc-grid,.obj-grid{grid-template-columns:1fr 1fr;}
+  .values-row{gap:0;}
+  .val-item{padding:24px 20px;border:none;border-bottom:1px solid rgba(0,0,0,.08);}
+  .hero-inner{padding:90px 24px 60px;}
+  .about-img-accent{display:none;}
+  .footer-top{flex-direction:column;}
+  .footer-cols{gap:32px;}
+  .why-items{grid-template-columns:1fr;}
+  .reg-box{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .fleet-grid,.svc-grid,.obj-grid,.why-items{grid-template-columns:1fr;}
+  .values-row{grid-template-columns:1fr 1fr;display:grid;}
+  .fg.half{grid-template-columns:1fr;}
+  .hero-stats{gap:20px;}
+  .stat-n{font-size:26px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" onclick="go('home')">
+    <div class="nav-logo-icon">D</div>
+    <div>
+      <div class="nav-logo-text ar">دوم لتأجير السيارات</div>
+      <div class="nav-logo-text en">Dom Car Rental</div>
+      <div class="nav-logo-sub ar">إحدى مجموعة شركات بن ربعي للأستثمار القابضة</div>
+      <div class="nav-logo-sub en">Bin Rabie Investment Holding Group</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a onclick="go('about')"><span class="ar">من نحن</span><span class="en">About</span></a></li>
+    <li><a onclick="go('fleet')"><span class="ar">أسطولنا</span><span class="en">Fleet</span></a></li>
+    <li><a onclick="go('services')"><span class="ar">خدماتنا</span><span class="en">Services</span></a></li>
+    <li><a onclick="go('why')"><span class="ar">لماذا دوم</span><span class="en">Why Dom</span></a></li>
+    <li><a onclick="go('contact')"><span class="ar">تواصل</span><span class="en">Contact</span></a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lbtn on" id="bAr" onclick="setLang('ar')">عربي</button>
+    <button class="lbtn" id="bEn" onclick="setLang('en')">EN</button>
+    <button class="book-btn" onclick="go('contact')">
+      <span class="ar">احجز الآن</span><span class="en">Book Now</span>
+    </button>
+    <button class="hamburger" id="burger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a onclick="go('home');closeMenu()"><span class="ar">الرئيسية</span><span class="en">Home</span></a>
+  <a onclick="go('about');closeMenu()"><span class="ar">من نحن</span><span class="en">About</span></a>
+  <a onclick="go('fleet');closeMenu()"><span class="ar">أسطولنا</span><span class="en">Fleet</span></a>
+  <a onclick="go('services');closeMenu()"><span class="ar">خدماتنا</span><span class="en">Services</span></a>
+  <a onclick="go('why');closeMenu()"><span class="ar">لماذا دوم</span><span class="en">Why Dom</span></a>
+  <a onclick="go('contact');closeMenu()"><span class="ar">تواصل</span><span class="en">Contact</span></a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline src="https://assets.mixkit.co/videos/48488/48488-720.mp4"></video>
+  </div>
+  <div class="hero-stripe"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag fade">
+        <span></span>
+        <span class="ar">المملكة العربية السعودية</span>
+        <span class="en">Saudi Arabia</span>
+      </div>
+      <h1 class="hero-h1 fade d1">
+        <span class="ar">أسطول <span class="y">متنوع</span><br>تأجير مرن<br>وسريع</span>
+        <span class="en">Diverse <span class="y">Fleet</span><br>Flexible &<br>Fast Rental</span>
+      </h1>
+      <p class="hero-p fade d2">
+        <span class="ar">دوم لتأجير السيارات توفر أسطولاً حديثاً من السيارات الاقتصادية والعائلية والفارهة وSUV بموديلات جديدة، مع حجز سهل وتسليم سريع داخل المملكة.</span>
+        <span class="en">Dom Car Rental provides a modern fleet of economy, family, luxury, and SUV vehicles with latest models, easy booking, and fast delivery across Saudi Arabia.</span>
+      </p>
+      <div class="hero-actions fade d3">
+        <button class="btn-y" onclick="go('fleet')"><span class="ar">استعرض الأسطول</span><span class="en">Browse Fleet</span></button>
+        <button class="btn-o" onclick="go('contact')"><span class="ar">تواصل معنا</span><span class="en">Contact Us</span></button>
+      </div>
+      <div class="hero-stats fade">
+        <div class="stat"><div class="stat-n">GMC</div><div class="stat-lbl ar">جيإم سي وتيران</div><div class="stat-lbl en">GMC & Terrain</div></div>
+        <div class="stat"><div class="stat-n">SUV</div><div class="stat-lbl ar">سيارات دفع رباعي</div><div class="stat-lbl en">4WD Vehicles</div></div>
+        <div class="stat"><div class="stat-n">3×</div><div class="stat-lbl ar">شهادات ISO</div><div class="stat-lbl en">ISO Certified</div></div>
+        <div class="stat"><div class="stat-n">24/7</div><div class="stat-lbl ar">دعم على الطريق</div><div class="stat-lbl en">Road Support</div></div>
+      </div>
+    </div>
+    <div class="hero-visual fade d2">
+      <div class="hv-card">
+        <div class="hv-float ar">أسطول حديث</div>
+        <div class="hv-float en">Modern Fleet</div>
+        <img class="hv-img" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=80" alt="cars">
+        <div class="hv-overlay"></div>
+        <div class="hv-bottom">
+          <div class="hv-badge">✓ <span class="ar">جاهزة للتسليم الآن</span><span class="en">Ready for Delivery</span></div>
+          <div class="hv-desc ar">سيارات اقتصادية • عائلية • SUV • فارهة — كلها متاحة بتسليم سريع</div>
+          <div class="hv-desc en">Economy • Family • SUV • Luxury — all available with fast delivery</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span class="ar">تصفّح</span><span class="en">SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="sec-wrap">
+    <div class="about-grid">
+      <div class="about-img-wrap fade">
+        <div class="about-yellow-line"></div>
+        <img class="about-img-main" src="https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?w=900&q=80" alt="Dom Fleet">
+        <div class="about-img-accent">
+          <img src="https://images.unsplash.com/photo-1560732488-6b0df240254a?w=500&q=80" alt="Car keys handover">
+          <div class="about-accent-lbl ar">تسليم سريع</div>
+          <div class="about-accent-lbl en">FAST DELIVERY</div>
+        </div>
+      </div>
+      <div class="about-text-sec fade d1">
+        <div class="sec-tag"><span class="ar">من نحن</span><span class="en">WHO WE ARE</span></div>
+        <h2><span class="ar">شريكك في التنقل<br><span>داخل المملكة</span></span><span class="en">Your Mobility Partner<br><span>Across Saudi Arabia</span></span></h2>
+        <p class="about-intro ar">أسطول حديث ومتنوع — من السيارة الاقتصادية إلى الفارهة وSUV</p>
+        <p class="about-intro en">Modern diverse fleet — from economy to luxury and SUV</p>
+        <p class="about-body ar">شركة "دوم" لتأجير السيارات تعمل في مجال تأجير السيارات داخل المملكة العربية السعودية، وتوفر أسطولاً حديثاً من السيارات الاقتصادية والمتوسطة والفارهة وSUV، بموديلات حديثة، مع نظام حجز سهل وتسليم سريع. وتستهدف الأفراد والشركات، مع تركيز خاص على التنقل من وإلى المطارات.<br><br>دوم لتأجير السيارات اتخذت طريق التوسع منذ انطلاقتها الأولى، واضعةً لنفسها مكانة مميزة في قطاع تأجير السيارات. ومنذ الخطوة الأولى، كان لها بصمة مختلفة انعكست في جودة الخدمات وتنوع الحلول التأجيرية التي تقدمها، مع التزامها بتجربة عملاء احترافية تلبي مختلف الاحتياجات عبر حلول مرنة تركز على سهولة الوصول وسرعة التسليم داخل المملكة.</p>
+        <p class="about-body en">Dom Car Rental operates in the vehicle rental sector across Saudi Arabia, providing a modern fleet of economy, mid-range, luxury and SUV vehicles with latest models, an easy booking system, and fast delivery. The company serves individuals and businesses with a special focus on airport transportation.<br><br>Since its launch, Dom has taken an expansion path, establishing a distinguished position in the car rental sector. From the very first step, it has left a distinct mark reflected in the quality of services and the diversity of rental solutions it offers, with a commitment to a professional customer experience that meets various needs through flexible solutions focused on ease of access and fast delivery across the Kingdom.</p>
+        <div class="vm-row">
+          <div class="vm-box"><div class="vm-ico">🎯</div><div class="vm-t ar">رؤيتنا</div><div class="vm-t en">OUR VISION</div><p class="vm-d ar">أن تكون «دوم» الخيار الأول لتأجير السيارات في المملكة عبر أسطول متنوع وخدمة احترافية وتجربة عملاء استثنائية.</p><p class="vm-d en">To be the top car rental choice in Saudi Arabia through a diverse fleet, professional service, and exceptional customer experience.</p></div>
+          <div class="vm-box"><div class="vm-ico">🚀</div><div class="vm-t ar">رسالتنا</div><div class="vm-t en">OUR MISSION</div><p class="vm-d ar">تقديم حلول تأجير سيارات موثوقة ومرنة بمعايير خدمة عالية، تضمن تجربة عميل سهلة وسريعة من الحجز حتى التسليم عبر حلول مرنة تركز على سهولة الوصول وسرعة التسليم داخل المملكة.</p><p class="vm-d en">Providing reliable and flexible car rental solutions with high service standards, ensuring a smooth and fast customer experience from booking to delivery through flexible solutions focused on ease of access and speed across the Kingdom.</p></div>
+        </div>
+        <button class="btn-y" onclick="go('contact')"><span class="ar">احجز الآن</span><span class="en">Book Now</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FLEET -->
+<section class="fleet" id="fleet">
+  <div class="sec-wrap">
+    <div class="sec-head fade">
+      <div class="sec-tag"><span class="ar">أسطولنا</span><span class="en">OUR FLEET</span></div>
+      <h2 class="sec-title"><span class="ar">سيارة لكل <span class="y">احتياج</span></span><span class="en">A Car for Every <span class="y">Need</span></span></h2>
+      <p class="sec-sub ar">يضم أسطول «دوم» مجموعة من أفضل السيارات المختارة بعناية، مثل مرسيدس وجمس/جي إم سي وتورس وهيونداي</p>
+      <p class="sec-sub en">Dom's fleet includes the finest carefully selected vehicles — Mercedes, GMC, Taurus, Hyundai & more</p>
+    </div>
+    <div class="fleet-cats fade">
+      <button class="cat-btn on" onclick="filterCars(this,'all')"><span class="ar">الكل</span><span class="en">All</span></button>
+      <button class="cat-btn" onclick="filterCars(this,'eco')"><span class="ar">اقتصادية</span><span class="en">Economy</span></button>
+      <button class="cat-btn" onclick="filterCars(this,'family')"><span class="ar">عائلية</span><span class="en">Family</span></button>
+      <button class="cat-btn" onclick="filterCars(this,'suv')">SUV</button>
+      <button class="cat-btn" onclick="filterCars(this,'luxury')"><span class="ar">فارهة</span><span class="en">Luxury</span></button>
+    </div>
+    <div class="fleet-grid" id="fleetGrid">
+      <!-- Economy -->
+      <div class="car-card fade" data-cat="eco">
+        <div class="car-img-wrap">
+          <img class="car-img" src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=700&q=80" alt="Economy Car">
+          <div class="car-cat-badge ar">اقتصادية</div><div class="car-cat-badge en">Economy</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name ar">سيارة اقتصادية</div><div class="car-name en">Economy Car</div>
+          <div class="car-model ar">موديل حديث — هيونداي / تويوتا</div><div class="car-model en">Latest Model — Hyundai / Toyota</div>
+          <div class="car-features">
+            <span class="car-feat">⛽ <span class="ar">توفير وقود</span><span class="en">Fuel Efficient</span></span>
+            <span class="car-feat">👤 <span class="ar">5 أشخاص</span><span class="en">5 Seats</span></span>
+            <span class="car-feat">❄️ A/C</span>
+          </div>
+          <button class="car-book" onclick="go('contact')"><span class="ar">احجز الآن</span><span class="en">Book Now</span></button>
+        </div>
+      </div>
+      <!-- Family -->
+      <div class="car-card fade d1" data-cat="family">
+        <div class="car-img-wrap">
+          <img class="car-img" src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=700&q=80" alt="Family Car">
+          <div class="car-cat-badge ar">عائلية</div><div class="car-cat-badge en">Family</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name ar">سيارة عائلية</div><div class="car-name en">Family Car</div>
+          <div class="car-model ar">موديل حديث — تويوتا / هيونداي</div><div class="car-model en">Latest Model — Toyota / Hyundai</div>
+          <div class="car-features">
+            <span class="car-feat">👨‍👩‍👧 <span class="ar">7 أشخاص</span><span class="en">7 Seats</span></span>
+            <span class="car-feat">🧳 <span class="ar">مساحة واسعة</span><span class="en">Spacious</span></span>
+            <span class="car-feat">❄️ A/C</span>
+          </div>
+          <button class="car-book" onclick="go('contact')"><span class="ar">احجز الآن</span><span class="en">Book Now</span></button>
+        </div>
+      </div>
+      <!-- SUV -->
+      <div class="car-card fade d2" data-cat="suv">
+        <div class="car-img-wrap">
+          <img class="car-img" src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=700&q=80" alt="GMC Yukon">
+          <div class="car-cat-badge">SUV</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name ar">جيإم سي يوكون</div><div class="car-name en">GMC Yukon</div>
+          <div class="car-model ar">موديل 2024 — دفع رباعي</div><div class="car-model en">2024 Model — 4WD</div>
+          <div class="car-features">
+            <span class="car-feat">🏔️ 4WD</span>
+            <span class="car-feat">👤 <span class="ar">8 أشخاص</span><span class="en">8 Seats</span></span>
+            <span class="car-feat">💪 <span class="ar">قوة عالية</span><span class="en">High Power</span></span>
+          </div>
+          <button class="car-book" onclick="go('contact')"><span class="ar">احجز الآن</span><span class="en">Book Now</span></button>
+        </div>
+      </div>
+      <!-- Luxury -->
+      <div class="car-card fade" data-cat="luxury">
+        <div class="car-img-wrap">
+          <img class="car-img" src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=700&q=80" alt="Mercedes-Benz">
+          <div class="car-cat-badge ar">فارهة</div><div class="car-cat-badge en">Luxury</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name">Mercedes-Benz</div>
+          <div class="car-model ar">موديل حديث — فئة E / S</div><div class="car-model en">Latest Model — E / S Class</div>
+          <div class="car-features">
+            <span class="car-feat">⭐ <span class="ar">فارهة</span><span class="en">Premium</span></span>
+            <span class="car-feat">🔇 <span class="ar">عازل صوت</span><span class="en">Quiet Ride</span></span>
+            <span class="car-feat">📱 <span class="ar">متصل</span><span class="en">Connected</span></span>
+          </div>
+          <button class="car-book" onclick="go('contact')"><span class="ar">احجز الآن</span><span class="en">Book Now</span></button>
+        </div>
+      </div>
+      <!-- SUV 2 -->
+      <div class="car-card fade d1" data-cat="suv">
+        <div class="car-img-wrap">
+          <img class="car-img" src="https://images.unsplash.com/photo-1542362567-b07e54358753?w=700&q=80" alt="Hyundai Tucson">
+          <div class="car-cat-badge ar">SUV فارهة</div><div class="car-cat-badge en">Luxury SUV</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name">Hyundai Tucson</div>
+          <div class="car-model ar">موديل 2024 — أوتوماتيك</div><div class="car-model en">2024 Model — Automatic</div>
+          <div class="car-features">
+            <span class="car-feat">🌟 <span class="ar">بانوراما</span><span class="en">Panoramic</span></span>
+            <span class="car-feat">📷 <span class="ar">كاميرا خلفية</span><span class="en">Rear Camera</span></span>
+            <span class="car-feat">❄️ A/C</span>
+          </div>
+          <button class="car-book" onclick="go('contact')"><span class="ar">احجز الآن</span><span class="en">Book Now</span></button>
+        </div>
+      </div>
+      <!-- Long-term -->
+      <div class="car-card fade d2" data-cat="family">
+        <div class="car-img-wrap">
+          <img class="car-img" src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=700&q=80" alt="Corporate Fleet">
+          <div class="car-cat-badge ar">تأجير طويل</div><div class="car-cat-badge en">Long-term</div>
+        </div>
+        <div class="car-body">
+          <div class="car-name ar">عقود الشركات</div><div class="car-name en">Corporate Fleet</div>
+          <div class="car-model ar">أسطول مخصص للشركات</div><div class="car-model en">Dedicated corporate fleet</div>
+          <div class="car-features">
+            <span class="car-feat">📋 <span class="ar">عقد مرن</span><span class="en">Flexible Contract</span></span>
+            <span class="car-feat">💰 <span class="ar">أسعار مميزة</span><span class="en">Special Rates</span></span>
+          </div>
+          <button class="car-book" onclick="go('contact')"><span class="ar">استفسر الآن</span><span class="en">Inquire Now</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="sec-wrap">
+    <div class="sec-head fade">
+      <div class="sec-tag" style="background:rgba(245,184,0,.1);"><span class="ar">ماذا نقدم</span><span class="en">WHAT WE OFFER</span></div>
+      <h2 class="sec-title" style="color:var(--w);"><span class="ar">خدماتنا <span class="y">المتنوعة</span></span><span class="en">Our <span class="y">Services</span></span></h2>
+      <p class="sec-sub" style="color:rgba(255,255,255,.4);">
+        <span class="ar">حلول تأجير مرنة تناسب كل احتياج</span>
+        <span class="en">Flexible rental solutions for every need</span>
+      </p>
+    </div>
+    <div class="svc-grid fade">
+      <div class="svc-card"><div class="svc-num">01</div><span class="svc-ico">🗓️</span><div class="svc-name ar">تأجير يومي / أسبوعي / شهري</div><div class="svc-name en">Daily / Weekly / Monthly</div><p class="svc-desc ar">مرونة كاملة في مدة الإيجار — ساعات أو أيام أو أسابيع أو أشهر حسب احتياجك تماماً.</p><p class="svc-desc en">Full flexibility in rental duration — hours, days, weeks, or months exactly as you need.</p><span class="svc-tag ar">مرن</span><span class="svc-tag en">Flexible</span></div>
+      <div class="svc-card"><div class="svc-num">02</div><span class="svc-ico">🏢</span><div class="svc-name ar">تأجير الشركات — عقود طويلة</div><div class="svc-name en">Corporate — Long-term</div><p class="svc-desc ar">حلول مخصصة للشركات مع أسطول متاح دائماً وعقود مرنة وأسعار تنافسية وفواتير مفصّلة.</p><p class="svc-desc en">Tailored solutions for companies with always-available fleet, flexible contracts, and competitive pricing.</p><span class="svc-tag ar">شركات</span><span class="svc-tag en">Corporate</span></div>
+      <div class="svc-card"><div class="svc-num">03</div><span class="svc-ico">✈️</span><div class="svc-name ar">توصيل المطارات</div><div class="svc-name en">Airport Transfers</div><p class="svc-desc ar">تسليم واستلام السيارة من وإلى المطار مع تركيز خاص على راحة المسافر وسرعة الإجراءات.</p><p class="svc-desc en">Car delivery and pickup at airports with special focus on traveler comfort and fast procedures.</p><span class="svc-tag ar">مطار</span><span class="svc-tag en">Airport</span></div>
+      <div class="svc-card"><div class="svc-num">04</div><span class="svc-ico">🚗</span><div class="svc-name ar">تأجير سيارات اقتصادية</div><div class="svc-name en">Economy Cars</div><p class="svc-desc ar">أسعار منافسة لتأجير سيارات اقتصادية حديثة — توفير في الوقود مع راحة الحركة اليومية.</p><p class="svc-desc en">Competitive pricing for modern economy cars — fuel efficient with daily driving comfort.</p><span class="svc-tag ar">اقتصادي</span><span class="svc-tag en">Economy</span></div>
+      <div class="svc-card"><div class="svc-num">05</div><span class="svc-ico">🏔️</span><div class="svc-name ar">تأجير سيارات SUV</div><div class="svc-name en">SUV Rentals</div><p class="svc-desc ar">جيإم سي ويوكون وتوراس وهيونداي توسان — مثالية للعائلات والرحلات الطويلة والمناطق الوعرة.</p><p class="svc-desc en">GMC Yukon, Taurus, Hyundai Tucson — ideal for families, long trips, and rugged terrain.</p><span class="svc-tag">SUV</span></div>
+      <div class="svc-card"><div class="svc-num">06</div><span class="svc-ico">⭐</span><div class="svc-name ar">تأجير سيارات فارهة</div><div class="svc-name en">Luxury Cars</div><p class="svc-desc ar">مرسيدس وغيرها من السيارات الفارهة للمناسبات الخاصة والأعمال الراقية بأسعار تنافسية.</p><p class="svc-desc en">Mercedes and other luxury vehicles for special occasions and premium business needs.</p><span class="svc-tag ar">فارهة</span><span class="svc-tag en">Luxury</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);"></div>
+
+<!-- WHY DOM -->
+<section class="why" id="why">
+  <div class="sec-wrap">
+    <div class="sec-head fade">
+      <div class="sec-tag"><span class="ar">لماذا دوم</span><span class="en">WHY DOM</span></div>
+      <h2 class="sec-title"><span class="ar">ميزات تجعلنا <span class="y">الخيار الأول</span></span><span class="en">Features That Make Us <span class="y">First Choice</span></span></h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-items fade">
+        <div class="why-item"><div class="why-check">🚗</div><div class="why-n ar">أسطول حديث ومتنوع</div><div class="why-n en">Modern & Diverse Fleet</div><p class="why-d ar">موديلات جديدة تناسب كل الاحتياجات من اقتصادي إلى فارهة.</p><p class="why-d en">New models for every need from economy to luxury.</p></div>
+        <div class="why-item"><div class="why-check">⚡</div><div class="why-n ar">تسليم سريع بدون تعقيد</div><div class="why-n en">Fast & Simple Delivery</div><p class="why-d ar">إجراءات واضحة وتجربة سلسة من أول اتصال حتى تسليم المفاتيح.</p><p class="why-d en">Clear procedures and smooth experience from first contact to key handover.</p></div>
+        <div class="why-item"><div class="why-check">💰</div><div class="why-n ar">أسعار تنافسية</div><div class="why-n en">Competitive Pricing</div><p class="why-d ar">ضمن متوسط السوق بدون مبالغة وبدون رسوم خفية.</p><p class="why-d en">Market competitive rates with no hidden fees or surprises.</p></div>
+        <div class="why-item"><div class="why-check">📍</div><div class="why-n ar">موقع استراتيجي</div><div class="why-n en">Strategic Location</div><p class="why-d ar">سهل الوصول في قلب جدة على طريق المدينة.</p><p class="why-d en">Easy access in the heart of Jeddah on Madinah Road.</p></div>
+        <div class="why-item"><div class="why-check">🏢</div><div class="why-n ar">جاهزية عقود الشركات</div><div class="why-n en">Corporate Readiness</div><p class="why-d ar">خيارات مرنة للتأجير طويل الأجل مع أسعار مخصصة للشركات.</p><p class="why-d en">Flexible long-term options with dedicated corporate rates.</p></div>
+        <div class="why-item"><div class="why-check">🛡️</div><div class="why-n ar">دعم 24/7 على الطريق</div><div class="why-n en">24/7 Road Support</div><p class="why-d ar">فريق دعم متاح على مدار الساعة لراحتك واطمئنانك الكامل.</p><p class="why-d en">Support team available around the clock for your complete peace of mind.</p></div>
+        <div class="why-item"><div class="why-check">📱</div><div class="why-n ar">حجز سهل</div><div class="why-n en">Easy Booking</div><p class="why-d ar">حجز بسيط عبر الهاتف أو الموقع أو التطبيق في دقائق.</p><p class="why-d en">Simple booking by phone, website, or app in minutes.</p></div>
+        <div class="why-item"><div class="why-check">🚀</div><div class="why-n ar">خدمة الاستلام والتوصيل</div><div class="why-n en">Pickup & Delivery</div><p class="why-d ar">نوصل السيارة لباب منزلك أو مكتبك حسب طلبك.</p><p class="why-d en">We deliver the car to your door or office as requested.</p></div>
+      </div>
+      <div class="why-visual fade d2">
+        <img class="why-img-big" src="https://images.unsplash.com/photo-1549317661-bd32c8ce0b2c?w=800&q=80" alt="Dom Cars">
+        <div class="why-img-overlay"></div>
+        <div class="why-cta-card">
+          <div>
+            <div class="why-cta-text ar">احجز سيارتك<br>الآن بسهولة</div>
+            <div class="why-cta-text en">Book your car<br>now easily</div>
+          </div>
+          <div class="why-cta-num" onclick="go('contact')" style="cursor:pointer;">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OBJECTIVES -->
+<section class="objectives" id="objectives">
+  <div class="sec-wrap">
+    <div class="sec-head fade">
+      <div class="sec-tag"><span class="ar">أهدافنا</span><span class="en">OUR OBJECTIVES</span></div>
+      <h2 class="sec-title" style="color:var(--w);"><span class="ar">نسعى دائماً <span class="y">نحو الأفضل</span></span><span class="en">Always Striving <span class="y">for Better</span></span></h2>
+    </div>
+    <div class="obj-grid fade">
+      <div class="obj-card"><div class="obj-num">01</div><div class="obj-ico">😊</div><p class="obj-text ar">رفع مستوى رضا العملاء عبر خدمة سريعة وواضحة وتجربة سلسة من الحجز حتى التسليم.</p><p class="obj-text en">Raise customer satisfaction through fast, clear service and a smooth experience from booking to delivery.</p></div>
+      <div class="obj-card"><div class="obj-num">02</div><div class="obj-ico">🤝</div><p class="obj-text ar">فهم احتياجات العملاء وتلبية ما يريدون بمرونة عالية وخيارات تناسب الأفراد والشركات.</p><p class="obj-text en">Understand customer needs and meet their requirements with high flexibility for both individuals and businesses.</p></div>
+      <div class="obj-card"><div class="obj-num">03</div><div class="obj-ico">⭐</div><p class="obj-text ar">تقديم حلول تأجير من الدرجة الأولى بمعايير جودة عالية وأسعار منافسة وخطط متنوعة.</p><p class="obj-text en">Provide first-class rental solutions with high quality standards, competitive pricing and diverse plans.</p></div>
+      <div class="obj-card"><div class="obj-num">04</div><div class="obj-ico">📋</div><p class="obj-text ar">الالتزام بالشفافية والمصداقية في العقود والشروط والتسعير بدون مفاجآت من أي نوع.</p><p class="obj-text en">Commit to transparency in contracts, terms, and pricing with absolutely no surprises of any kind.</p></div>
+      <div class="obj-card"><div class="obj-num">05</div><div class="obj-ico">🚙</div><p class="obj-text ar">توفير أسطول متنوع ومحدّث يغطي الاقتصادي والعائلي وSUV والفارهة مع جاهزية عالية.</p><p class="obj-text en">Provide a diverse, updated fleet covering economy, family, SUV, and luxury with high availability.</p></div>
+      <div class="obj-card"><div class="obj-num">06</div><div class="obj-ico">🔄</div><p class="obj-text ar">تحسين الجودة بشكل مستمر عبر تطوير الخدمة واستقبال الملاحظات ومعالجة التحديات بسرعة.</p><p class="obj-text en">Continuously improve quality by developing service, receiving feedback, and quickly addressing challenges.</p></div>
+      <div class="obj-card"><div class="obj-num">07</div><div class="obj-ico">🛡️</div><p class="obj-text ar">تعزيز السلامة والموثوقية من خلال فحص دوري للسيارات ودعم على الطريق عند الحاجة.</p><p class="obj-text en">Enhance safety and reliability through regular vehicle inspection and on-road support when needed.</p></div>
+      <div class="obj-card"><div class="obj-num">08</div><div class="obj-ico">🗺️</div><p class="obj-text ar">توسيع شبكة الفروع والشراكات داخل المملكة لضمان توفر الخدمة في أكثر من مدينة.</p><p class="obj-text en">Expand branch networks and partnerships across Saudi Arabia to ensure service availability in more cities.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="sec-wrap">
+    <div class="sec-head fade" style="margin-bottom:40px;">
+      <h2 style="font-size:clamp(24px,3vw,38px);font-weight:900;color:var(--b);">
+        <span class="ar">القيم الأساسية</span><span class="en">Core Values</span>
+      </h2>
+    </div>
+    <div class="values-row fade">
+      <div class="val-item"><div class="val-ico">✅</div><div class="val-name ar">السهولة</div><div class="val-name en">Simplicity</div></div>
+      <div class="val-item"><div class="val-ico">🔍</div><div class="val-name ar">الشفافية</div><div class="val-name en">Transparency</div></div>
+      <div class="val-item"><div class="val-ico">🛋️</div><div class="val-name ar">الراحة</div><div class="val-name en">Comfort</div></div>
+      <div class="val-item"><div class="val-ico">⚡</div><div class="val-name ar">الجاهزية</div><div class="val-name en">Readiness</div></div>
+      <div class="val-item"><div class="val-ico">🤝</div><div class="val-name ar">الثقة</div><div class="val-name en">Trust</div></div>
+      <div class="val-item"><div class="val-ico">🚗</div><div class="val-name ar">التنوع</div><div class="val-name en">Diversity</div></div>
+      <div class="val-item"><div class="val-ico">🏆</div><div class="val-name ar">الاحتراف</div><div class="val-name en">Professionalism</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TRUST / LEGAL -->
+<section class="trust" id="trust">
+  <div class="sec-wrap">
+    <div class="trust-grid">
+      <div class="fade">
+        <div class="sec-tag"><span class="ar">وثوقية قانونية</span><span class="en">LEGAL TRUST</span></div>
+        <div class="trust-title ar">مرخّصون ومعتمدون<br>رسمياً</div>
+        <div class="trust-title en">Officially Licensed<br>& Certified</div>
+        <p class="trust-sub ar">دوم لتأجير السيارات حاصلة على كافة التراخيص اللازمة ومعتمدة دولياً بثلاث شهادات ISO</p>
+        <p class="trust-sub en">Dom Car Rental holds all necessary licenses and is internationally certified with three ISO certifications</p>
+        <div class="reg-box">
+          <div class="reg-item"><div class="reg-label ar">السجل التجاري</div><div class="reg-label en">Commercial Reg.</div><div class="reg-val">7043741664</div></div>
+          <div class="reg-item"><div class="reg-label ar">ترخيص تأجير السيارات</div><div class="reg-label en">Car Rental License</div><div class="reg-val">14/00017421</div></div>
+          <div class="reg-item"><div class="reg-label ar">الحالة</div><div class="reg-label en">Status</div><div class="reg-val green ar">✓ مرخّصة</div><div class="reg-val green en">✓ Licensed</div></div>
+        </div>
+      </div>
+      <div class="fade d1">
+        <div class="iso-list">
+          <div class="iso-row">
+            <div class="iso-badge-y">ISO 9001:2015</div>
+            <div class="iso-info">
+              <div class="iso-name ar">نظام إدارة الجودة</div>
+              <div class="iso-name en">Quality Management System</div>
+              <div class="iso-desc-t ar">ضمان جودة الخدمة في كل مرحلة</div>
+              <div class="iso-desc-t en">Ensuring service quality at every stage</div>
+            </div>
+            <div class="iso-check">✓</div>
+          </div>
+          <div class="iso-row">
+            <div class="iso-badge-y">ISO 45001:2018</div>
+            <div class="iso-info">
+              <div class="iso-name ar">نظام إدارة السلامة المهنية</div>
+              <div class="iso-name en">Occupational Health & Safety</div>
+              <div class="iso-desc-t ar">بيئة عمل آمنة وموثوقة</div>
+              <div class="iso-desc-t en">Safe and reliable work environment</div>
+            </div>
+            <div class="iso-check">✓</div>
+          </div>
+          <div class="iso-row">
+            <div class="iso-badge-y">ISO 14001:2015</div>
+            <div class="iso-info">
+              <div class="iso-name ar">نظام الإدارة البيئية</div>
+              <div class="iso-name en">Environmental Management</div>
+              <div class="iso-desc-t ar">التزام بالمعايير البيئية الدولية</div>
+              <div class="iso-desc-t en">Committed to international environmental standards</div>
+            </div>
+            <div class="iso-check">✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="sec-wrap">
+    <div class="contact-grid">
+      <div class="fade">
+        <div class="sec-tag"><span class="ar">تواصل معنا</span><span class="en">CONTACT US</span></div>
+        <h2 class="contact-title"><span class="ar">نسعد <span>بخدمتك</span></span><span class="en">We're Happy to <span>Serve You</span></span></h2>
+        <p class="contact-sub ar">تواصل معنا للحجز أو الاستفسار — فريقنا جاهز لمساعدتك على مدار الساعة.</p>
+        <p class="contact-sub en">Contact us for booking or inquiries — our team is ready to help you 24/7.</p>
+        <div class="contact-items">
+          <div class="ci">
+            <div class="ci-ico">📞</div>
+            <div><div class="ci-lbl ar">الهاتف</div><div class="ci-lbl en">PHONE</div><div class="ci-val">0541754693</div></div>
+          </div>
+          <div class="ci">
+            <div class="ci-ico">✉️</div>
+            <div><div class="ci-lbl ar">البريد</div><div class="ci-lbl en">EMAIL</div><div class="ci-val">dom@binrabie.sa</div></div>
+          </div>
+          <div class="ci">
+            <div class="ci-ico">📍</div>
+            <div><div class="ci-lbl ar">الموقع</div><div class="ci-lbl en">LOCATION</div><div class="ci-val ar">جدة — طريق المدينة</div><div class="ci-val en">Jeddah — Madinah Road</div></div>
+          </div>
+          <div class="ci">
+            <div class="ci-ico">🕐</div>
+            <div><div class="ci-lbl ar">ساعات العمل</div><div class="ci-lbl en">WORKING HOURS</div><div class="ci-val ar">السبت — الخميس: 8 ص — 10 م</div><div class="ci-val en">Sat — Thu: 8 AM — 10 PM</div></div>
+          </div>
+        </div>
+        <div class="social-row">
+          <a class="sp" href="https://wa.me/966541754693" target="_blank">💬 WhatsApp</a>
+          <a class="sp" href="https://instagram.com/dom_binrabie" target="_blank">📸 @dom_binrabie</a>
+          <a class="sp" href="https://x.com/dom_binrabie" target="_blank">🐦 @dom_binrabie</a>
+          <a class="sp" href="https://facebook.com/dom.binrabie" target="_blank">📘 @dom.binrabie</a>
+          <a class="sp" href="https://snapchat.com/add/dom_binrabie" target="_blank">👻 Snapchat</a>
+          <a class="sp" href="https://tiktok.com/@dom_binrabie" target="_blank">🎵 TikTok</a>
+        </div>
+      </div>
+      <div class="contact-form fade d1">
+        <div class="cf-title ar">أرسل لنا رسالة</div>
+        <div class="cf-title en">Send Us a Message</div>
+        <form onsubmit="return handleForm(event)">
+          <div class="fg half">
+            <div><label class="fl ar">الاسم</label><label class="fl en">NAME</label><input class="fi" type="text" placeholder="الاسم الكامل" required></div>
+            <div><label class="fl ar">الهاتف</label><label class="fl en">PHONE</label><input class="fi" type="tel" placeholder="+966" required></div>
+          </div>
+          <div class="fg"><label class="fl ar">البريد الإلكتروني</label><label class="fl en">EMAIL</label><input class="fi" type="email" placeholder="email@example.com"></div>
+          <div class="fg">
+            <label class="fl ar">نوع الخدمة</label><label class="fl en">SERVICE TYPE</label>
+            <select class="fi">
+              <option value="" class="ar">اختر الخدمة</option>
+              <option value="" class="en">Select Service</option>
+              <option class="ar">تأجير يومي</option><option class="en">Daily Rental</option>
+              <option class="ar">تأجير أسبوعي</option><option class="en">Weekly Rental</option>
+              <option class="ar">تأجير شهري</option><option class="en">Monthly Rental</option>
+              <option class="ar">عقد شركات</option><option class="en">Corporate</option>
+              <option class="ar">توصيل مطار</option><option class="en">Airport Transfer</option>
+            </select>
+          </div>
+          <div class="fg"><label class="fl ar">الرسالة</label><label class="fl en">MESSAGE</label><textarea class="fi" rows="4" placeholder="اكتب رسالتك هنا..."></textarea></div>
+          <button type="submit" class="send"><span class="ar">إرسال الطلب</span><span class="en">Send Request</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="sec-wrap">
+    <div class="footer-top">
+      <div class="footer-logo-area">
+        <div class="fl-logo">
+          <div class="fl-ico">D</div>
+          <div>
+            <div class="fl-name ar">دوم لتأجير السيارات</div>
+            <div class="fl-name en">Dom Car Rental</div>
+            <div class="fl-sub ar">إحدى مجموعة شركات بن ربعي للأستثمار القابضة</div>
+            <div class="fl-sub en">Bin Rabie Investment Holding Group</div>
+          </div>
+        </div>
+        <p class="fl-tagline ar">أسطول حديث، خدمة مرنة، وتسليم سريع داخل المملكة العربية السعودية.</p>
+        <p class="fl-tagline en">Modern fleet, flexible service, and fast delivery across Saudi Arabia.</p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <div class="fc-title ar">روابط سريعة</div>
+          <div class="fc-title en">QUICK LINKS</div>
+          <div class="fc-links">
+            <a onclick="go('home')"><span class="ar">الرئيسية</span><span class="en">Home</span></a>
+            <a onclick="go('about')"><span class="ar">من نحن</span><span class="en">About</span></a>
+            <a onclick="go('fleet')"><span class="ar">أسطولنا</span><span class="en">Fleet</span></a>
+            <a onclick="go('services')"><span class="ar">خدماتنا</span><span class="en">Services</span></a>
+            <a onclick="go('contact')"><span class="ar">تواصل</span><span class="en">Contact</span></a>
+          </div>
+        </div>
+        <div>
+          <div class="fc-title ar">خدماتنا</div>
+          <div class="fc-title en">SERVICES</div>
+          <div class="fc-links">
+            <a><span class="ar">تأجير يومي</span><span class="en">Daily Rental</span></a>
+            <a><span class="ar">تأجير شهري</span><span class="en">Monthly Rental</span></a>
+            <a><span class="ar">عقود شركات</span><span class="en">Corporate</span></a>
+            <a><span class="ar">توصيل مطار</span><span class="en">Airport Transfer</span></a>
+            <a><span class="ar">سيارات فارهة</span><span class="en">Luxury Cars</span></a>
+          </div>
+        </div>
+        <div>
+          <div class="fc-title ar">تواصل</div>
+          <div class="fc-title en">CONTACT</div>
+          <div class="fc-links">
+            <a>0541754693</a>
+            <a>dom@binrabie.sa</a>
+            <a><span class="ar">جدة — طريق المدينة</span><span class="en">Jeddah — Madinah Rd</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="fc">© 2026 <span class="ar">دوم لتأجير السيارات</span><span class="en">Dom Car Rental</span>. <span class="ar">جميع الحقوق محفوظة</span><span class="en">All rights reserved</span>.</div>
+      <div class="fc"><span class="ar">السجل التجاري:</span><span class="en">C.R.:</span> <span>7043741664</span></div>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ── LANGUAGE ── */
+function setLang(l){
+  document.documentElement.lang=l;
+  document.documentElement.dir=l==='ar'?'rtl':'ltr';
+  document.getElementById('bAr').classList.toggle('on',l==='ar');
+  document.getElementById('bEn').classList.toggle('on',l==='en');
+}
+
+/* ── SMOOTH SCROLL ── */
+function go(id){
+  var el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── NAV SCROLL ── */
+var lastY=0;
+window.addEventListener('scroll',function(){
+  var nav=document.getElementById('nav');
+  var btt=document.getElementById('btt');
+  var y=window.scrollY;
+  if(y>80) nav.classList.add('up'); else nav.classList.remove('up');
+  if(y>600) btt.classList.add('show'); else btt.classList.remove('show');
+  lastY=y;
+});
+
+/* ── FLEET FILTER ── */
+function filterCars(btn,cat){
+  document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  document.querySelectorAll('.car-card').forEach(function(c){
+    if(cat==='all'||c.dataset.cat===cat){
+      c.classList.remove('hide');
+    }else{
+      c.classList.add('hide');
+    }
+  });
+}
+
+/* ── MOBILE MENU ── */
+function toggleMenu(){
+  document.getElementById('burger').classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('mobileNav').classList.remove('open');
+}
+
+/* ── FADE IN (Intersection Observer) ── */
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+  });
+},{threshold:.15});
+document.querySelectorAll('.fade').forEach(function(el){io.observe(el);});
+
+/* ── FORM HANDLER ── */
+function handleForm(e){
+  e.preventDefault();
+  var form=e.target;
+  var name=form.querySelector('input[type="text"]').value;
+  var phone=form.querySelector('input[type="tel"]').value;
+  var email=form.querySelector('input[type="email"]').value;
+  var service=form.querySelector('select').value;
+  var message=form.querySelector('textarea').value;
+  var now=new Date().toLocaleString('ar-SA');
+
+  /* 1 — WhatsApp */
+  var wa='🚗 *حجز جديد — دوم لتأجير السيارات*\n\n';
+  wa+='👤 *الاسم:* '+name+'\n';
+  wa+='📞 *الهاتف:* '+phone+'\n';
+  wa+='✉️ *البريد:* '+(email||'—')+'\n';
+  wa+='🔧 *الخدمة:* '+(service||'—')+'\n';
+  wa+='💬 *الرسالة:* '+(message||'—')+'\n';
+  wa+='🕐 *التاريخ:* '+now;
+  window.open('https://wa.me/966541754693?text='+encodeURIComponent(wa),'_blank');
+
+  /* 2 — Email via FormSubmit.co (free) */
+  fetch('https://formsubmit.co/ajax/dom@binrabie.sa',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      _subject:'🚗 حجز جديد من موقع دوم',
+      'الاسم':name,'الهاتف':phone,'البريد':email||'—',
+      'الخدمة':service||'—','الرسالة':message||'—','التاريخ':now
+    })
+  }).catch(function(){});
+
+  /* 3 — Google Sheets via Apps Script */
+  var SHEET_URL='';/* ضع رابط Google Apps Script هنا */
+  if(SHEET_URL){
+    fetch(SHEET_URL,{
+      method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:name,phone:phone,email:email,service:service,message:message,date:now})
+    }).catch(function(){});
+  }
+
+  /* Success UI */
+  var btn=form.querySelector('.send');
+  var origAr=btn.querySelector('.ar');
+  var origEn=btn.querySelector('.en');
+  if(origAr) origAr.textContent='تم الإرسال ✓';
+  if(origEn) origEn.textContent='Sent ✓';
+  btn.style.background='#22A55A';
+  setTimeout(function(){
+    if(origAr) origAr.textContent='إرسال الطلب';
+    if(origEn) origEn.textContent='Send Request';
+    btn.style.background='';
+    form.reset();
+  },3000);
+  return false;
+}
+</script>
+</body>
+</html>
