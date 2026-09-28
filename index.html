@@ -521,12 +521,13 @@ html[lang="en"] .ci-val{text-align:left;}
 .fl{display:block;font-size:10px;letter-spacing:2px;color:var(--y);text-transform:uppercase;margin-bottom:7px;font-weight:600;}
 .fi{
   width:100%;background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);color:black;
+  border:1px solid rgba(255,255,255,.12);color:#fff;
   padding:12px 16px;font-family:'Tajawal',sans-serif;font-size:14px;
   outline:none;transition:border-color .25s;border-radius:8px;
 }
 .fi:focus{border-color:var(--y);background:rgba(245,184,0,.04);}
-.fi::placeholder{color:rgba(255,255,255,.2);}
+.fi::placeholder{color:rgba(255,255,255,.6);}
+.fi option{background:#1a1a1a;color:#fff;}
 .fg.half{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .send{
   width:100%;background:var(--y);color:var(--b);border:none;
@@ -1091,13 +1092,19 @@ footer{background:#0A0A0A;border-top:1px solid rgba(255,255,255,.07);padding:64p
           <div class="fg">
             <label class="fl ar">نوع الخدمة</label><label class="fl en">SERVICE TYPE</label>
             <select class="fi">
-              <option value="" class="ar">اختر الخدمة</option>
-              <option value="" class="en">Select Service</option>
-              <option class="ar">تأجير يومي</option><option class="en">Daily Rental</option>
-              <option class="ar">تأجير أسبوعي</option><option class="en">Weekly Rental</option>
-              <option class="ar">تأجير شهري</option><option class="en">Monthly Rental</option>
-              <option class="ar">عقد شركات</option><option class="en">Corporate</option>
-              <option class="ar">توصيل مطار</option><option class="en">Airport Transfer</option>
+             <option value="" class="ar">اختر الخدمة</option><option value="" class="en">Select Service</option>
+
+<option value="flex" class="ar">تأجير يومي / أسبوعي / شهري</option> <option value="flex" class="en">Daily / Weekly / Monthly</option>
+
+<option value="corporate" class="ar">تأجير الشركات — عقود طويلة</option><option value="corporate" class="en">Corporate — Long-term</option>
+
+<option value="airport" class="ar">توصيل المطارات</option><option value="airport" class="en">Airport Transfers</option>
+
+<option value="economy" class="ar">تأجير سيارات اقتصادية</option><option value="economy" class="en">Economy Cars</option>
+
+<option value="suv" class="ar">تأجير سيارات SUV</option><option value="suv" class="en">SUV Rentals</option>
+
+<option value="luxury" class="ar">تأجير سيارات فارهة</option><option value="luxury" class="en">Luxury Cars</option>
             </select>
           </div>
           <div class="fg"><label class="fl ar">الرسالة</label><label class="fl en">MESSAGE</label><textarea class="fi" rows="4" placeholder="اكتب رسالتك هنا..."></textarea></div>
@@ -1170,6 +1177,37 @@ footer{background:#0A0A0A;border-top:1px solid rgba(255,255,255,.07);padding:64p
 <button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
+
+/*svc-card change to buttons*/
+const svcValues = ['flex','corporate','airport','economy','suv','luxury']; // same order as the 6 cards
+
+document.querySelectorAll('.svc-card').forEach((card, i) => {
+  card.style.cursor = 'pointer';
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+
+  const go = () => {
+    const sel = document.querySelector('select.fi');
+    if (!sel) return;
+    // pick the option with this value that's visible in the current language
+    const opts = [...sel.options].filter(o => o.value === svcValues[i]);
+    const opt = opts.find(o => getComputedStyle(o).display !== 'none') || opts[0];
+    if (opt) sel.value = opt.value, opt.selected = true;
+    sel.dispatchEvent(new Event('change'));
+    sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  card.addEventListener('click', go);
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+  });
+});
+
+
+
+
+
+
 /* ── LANGUAGE ── */
 function setLang(l){
   document.documentElement.lang=l;
